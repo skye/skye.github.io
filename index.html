@@ -4,16 +4,84 @@
   <head>
     <meta charset="utf-8">
     <title>MEELY'S B-DAY KARAOKE JAMBOREE</title>
-    <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+    <link rel="stylesheet" href="styles.css?v=1.0">
   </head>
 
   <body>
+    <div id="welcome">
+      Welcome to Meely's B-Day Karaoke Jamboree!
+      <div id="start-button">
+        START!
+      </div>
+    </div>
+
+    <div id="stage" class="hide">
+      <video id="webcam" autoplay="true"></video>
+      <div id="player-holder">
+        <div id="player"></div>
+      </div>
+      <video id="playback"></video>
+    </div>
+
     <div id="player"></div>
     <!-- <iframe id="player" type="text/html" width="640" height="390" -->
     <!--         src="https://www.youtube.com/embed/_Lbsz3WIlbU?enablejsapi=1&controls=0&autoplay=1&mute=1" -->
     <!--         frameborder="0"></iframe> -->
 
     <script>
+      var av_stream;
+      var recorder;
+      var av_data = []
+      navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(
+        function (stream) {
+          av_stream = stream;
+          recorder = new MediaRecorder(stream, {mimeType: "video/webm"});
+          recorder.ondataavailable = event => {
+            if (event.data.size > 0) {
+              av_data.push(event.data);
+            }
+          };
+        });
+
+      function wait(delayInMS) {
+        return new Promise(resolve => setTimeout(resolve, delayInMS));
+      }
+
+      var get = function(id) {return document.getElementById(id)};
+      var start = get("start-button");
+      start.onclick = function () {
+        var welcome = get("welcome");
+        welcome.remove();
+        var stage = get("stage");
+        stage.classList.remove("hide");
+        makeYTPlayer();
+
+        var webcam = document.getElementById('webcam');
+        webcam.srcObject = av_stream;
+        recorder.start();
+
+        let stopped = new Promise((resolve, reject) => {
+          recorder.onstop = resolve;
+          recorder.onerror = event => reject(event.name);
+        });
+
+        let recorded = wait(8000).then(
+          () => recorder.state == "recording" && recorder.stop()
+        );
+
+        return Promise.all([
+          stopped,
+          recorded
+        ]).then(() => {
+          av_stream.getTracks().forEach(track => track.stop());
+          var blob = new Blob(av_data, {type: "video/webm"});
+          var playback = document.getElementById("playback");
+          playback.src = URL.createObjectURL(blob);
+          playback.play();
+        });
+      }
+
+
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -25,13 +93,17 @@
       //    after the API code downloads.
       var player;
       function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
+        // player = makeYTPlayer();
+      }
+
+      function makeYTPlayer() {
+        return new YT.Player('player', {
           height: '390',
           width: '640',
           videoId: '_Lbsz3WIlbU',
           playerVars: {
             origin: 'file://',
-            autoplay: 1,
+            autoplay: 0,
             controls: 0,
             enablejsapi: 1,
           },
