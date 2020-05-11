@@ -1,0 +1,50 @@
+.card {
+  font-size: 48px;
+  background: green;
+  width: 800px;
+  height: 500px;
+  text-align: center;
+  margin-left: -400px;
+  top: 30%;
+  left: 50%;
+  position: absolute;
+  box-sizing: border-box;
+  padding-top: 80px;
+}
+
+.button {
+  background: lightblue;
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+#stage {
+  background: pink;
+  width: 1600px;
+  height: 1000px;
+  margin-left: -800px;
+  top: 10%;
+  left: 50%;
+  position: absolute;
+  z-index: -1;
+}
+
+#player-holder {
+  float: right;
+  margin-top: 250px;
+}
+
+#webcam {
+  float: left;
+  margin-top: 250px;
+}
+
+#playback {
+  float: left;
+  width: 200px;
+}
+
+.hide {
+  display: none;
+}
