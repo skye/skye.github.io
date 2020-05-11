@@ -130,14 +130,26 @@
             if (event.data == YT.PlayerState.ENDED) {
               var blob = new Blob(av_data, {type: "video/webm"});
               av_data = []
-              playback.src = URL.createObjectURL(blob);
-              playback.classList.remove("hide");
-              playback.play();
-              playback.onended = event => {
+              webcam.srcObject = null;
+              webcam.src = URL.createObjectURL(blob);
+              webcam.muted = false;
+              webcam.play()
+              webcam.onended = event => {
+                webcam.muted = true;
                 stage.classList.add("hide");
+                webcam.src = null;
+                webcam.srcObject = av_stream;
                 playback.classList.add("hide");
                 next_card.classList.remove("hide");
-              }
+              };
+              // playback.src = URL.createObjectURL(blob);
+              // playback.classList.remove("hide");
+              // playback.play();
+              // playback.onended = event => {
+              //   stage.classList.add("hide");
+              //   playback.classList.add("hide");
+              //   next_card.classList.remove("hide");
+              // }
             }
           });
       }
