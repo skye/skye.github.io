@@ -8,18 +8,23 @@
   </head>
 
   <body>
-    <div id="welcome">
+    <div id="welcome" class="card">
       Welcome to Meely's B-Day Karaoke Jamboree!
-      <div id="start-button">
+      <div id="start-button" class="button hide">
         START!
       </div>
     </div>
 
-    <div id="stage" class="hide">
-      <video id="webcam" autoplay="true"></video>
-      <div id="player-holder">
-        <div id="player"></div>
+    <div id="level1" class="card hide">
+      LEVEL 1
+      <div id="start-level1" class="button">
+        start
       </div>
+    </div>
+
+    <div id="stage" class="hide">
+      <video id="webcam" autoplay muted></video>
+      <div id="player-holder"><div id="player"></div></div>
       <video id="playback"></video>
     </div>
 
@@ -29,6 +34,31 @@
     <!--         frameborder="0"></iframe> -->
 
     <script>
+      var welcome = get("welcome");
+      var start = get("start-button");
+      var level1 = get("level1");
+      var start_level1 = get("start-level1");
+      var stage = get("stage");
+      var webcam = document.getElementById('webcam');
+
+      // Init youtube
+      var tag = document.createElement('script');
+      tag.src = "http://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      var yt_ready = false;
+      function onYouTubeIframeAPIReady() {
+        yt_ready = true;
+      }
+      function waitForYT(cb) {
+        if (yt_ready) {
+          return cb();
+        } else {
+          return setTimeout(waitForYt(), 100);
+        }
+      }
+
+      // Init AV + recorder
       var av_stream;
       var recorder;
       var av_data = []
@@ -41,88 +71,73 @@
               av_data.push(event.data);
             }
           };
+          waitForYT(() => start.classList.remove("hide"));
         });
 
       function wait(delayInMS) {
         return new Promise(resolve => setTimeout(resolve, delayInMS));
       }
 
-      var get = function(id) {return document.getElementById(id)};
-      var start = get("start-button");
-      start.onclick = function () {
-        var welcome = get("welcome");
-        welcome.remove();
-        var stage = get("stage");
+      function get(id) {
+        return document.getElementById(id)
+      }
+
+      function playSong(vid, record_start, record_length) {
         stage.classList.remove("hide");
-        makeYTPlayer();
-
-        var webcam = document.getElementById('webcam');
         webcam.srcObject = av_stream;
-        recorder.start();
-
-        let stopped = new Promise((resolve, reject) => {
-          recorder.onstop = resolve;
-          recorder.onerror = event => reject(event.name);
-        });
-
-        let recorded = wait(8000).then(
-          () => recorder.state == "recording" && recorder.stop()
-        );
-
-        return Promise.all([
-          stopped,
-          recorded
-        ]).then(() => {
-          av_stream.getTracks().forEach(track => track.stop());
-          var blob = new Blob(av_data, {type: "video/webm"});
-          var playback = document.getElementById("playback");
-          playback.src = URL.createObjectURL(blob);
-          playback.play();
-        });
+        yt_player = makeYTPlayer(
+          vid,
+          // onready
+          event => {
+            yt_player.playVideo();
+            wait(record_start).then(() => {
+              recorder.start();
+              console.log("record start");
+              wait(record_length).then(() => {
+                recorder.stop();
+                console.log("record stop");
+              });
+            });
+          },
+          // onchange
+          event => {
+            console.log(event.data);
+            if (event.data == YT.PlayerState.ENDED) {
+              av_stream.getTracks().forEach(track => track.stop());
+              var blob = new Blob(av_data, {type: "video/webm"});
+              var playback = document.getElementById("playback");
+              playback.src = URL.createObjectURL(blob);
+              playback.play();
+            }
+          });
       }
 
-
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "http://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        // player = makeYTPlayer();
-      }
-
-      function makeYTPlayer() {
+      function makeYTPlayer(vid, onready, onchange) {
         return new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: '_Lbsz3WIlbU',
-          playerVars: {
-            origin: 'file://',
-            autoplay: 0,
-            controls: 0,
-            enablejsapi: 1,
-          },
+          videoId: vid,
+          // playerVars: {
+          //   autoplay: 1,
+          //   controls: 1,
+          // },
           events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
+            'onReady': onready,
+            'onStateChange': onchange,
+          },
         });
       }
 
-      function onPlayerReady(event) {
-        console.log("ready");
-        console.log(event.target);
-        // event.target.playVideo();
-      }
+      start.onclick = function () {
+        welcome.remove();
+        level1.classList.remove("hide");
+      };
 
-      function onPlayerStateChange(event) {
-        console.log("event", event.data);
-      }
+      start_level1.onclick = function () {
+        level1.remove();
+        playSong("_Lbsz3WIlbU", 26000, 7000);
+        // playSong("Z-yJTjbswhw", 2000, 2000);
+      };
     </script>
   </body>
 </html>
