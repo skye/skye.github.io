@@ -1,61 +1,174 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    hello world
-<iframe width="560" height="315" src="https://www.youtube.com/embed/tw9TtZy_Mt8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<!doctype html>
 
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MEELY'S B-DAY KARAOKE JAMBOREE</title>
+    <link rel="stylesheet" href="styles.css?v=1.0">
+  </head>
+
+  <body>
+    <div id="welcome" class="card">
+      Welcome to Meely's B-Day Karaoke Jamboree!
+      <div id="start-button" class="button hide">
+        START!
+      </div>
+    </div>
+
+    <div id="level1" class="card hide">
+      LEVEL 1
+      <div id="start-level1" class="button">
+        start
+      </div>
+    </div>
+
+    <div id="level2" class="card hide">
+      LEVEL 2
+      <div id="start-level2" class="button">
+        start
+      </div>
+    </div>
+
+    <div id="level3" class="card hide">
+      LEVEL 3
+      <div id="start-level3" class="button">
+        start
+      </div>
+    </div>
+
+    <div id="stage" class="hide">
+      <video id="webcam" autoplay muted></video>
+      <div id="player-holder"><div id="player"></div></div>
+      <video id="playback"></video>
+    </div>
+
     <div id="player"></div>
+    <!-- <iframe id="player" type="text/html" width="640" height="390" -->
+    <!--         src="https://www.youtube.com/embed/_Lbsz3WIlbU?enablejsapi=1&controls=0&autoplay=1&mute=1" -->
+    <!--         frameborder="0"></iframe> -->
 
     <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
+      function get(id) {
+        return document.getElementById(id)
+      }
 
-      tag.src = "https://www.youtube.com/iframe_api";
+      var welcome = get("welcome");
+      var start = get("start-button");
+      var level1 = get("level1");
+      var start_level1 = get("start-level1");
+      var level2 = get("level2");
+      var start_level2 = get("start-level2");
+      var level3 = get("level3");
+      var start_level3 = get("start-level3");
+      var stage = get("stage");
+      var webcam = document.getElementById('webcam');
+
+      // Init youtube
+      var tag = document.createElement('script');
+      tag.src = "http://www.youtube.com/iframe_api";
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
+      var yt_ready = false;
       function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
+        yt_ready = true;
+      }
+      function waitForYT(cb) {
+        if (yt_ready) {
+          return cb();
+        } else {
+          return setTimeout(waitForYt(), 100);
+        }
+      }
+
+      // Init AV + recorder
+      var av_stream;
+      var recorder;
+      var av_data = []
+      navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(
+        function (stream) {
+          av_stream = stream;
+          recorder = new MediaRecorder(stream, {mimeType: "video/webm"});
+          recorder.ondataavailable = event => {
+            if (event.data.size > 0) {
+              av_data.push(event.data);
+            }
+          };
+          waitForYT(() => start.classList.remove("hide"));
+        });
+
+      function wait(delayInMS) {
+        return new Promise(resolve => setTimeout(resolve, delayInMS));
+      }
+
+      function playSong(vid, record_start, record_length, next_card) {
+        stage.classList.remove("hide");
+        webcam.srcObject = av_stream;
+        yt_player = makeYTPlayer(
+          vid,
+          // onready
+          event => {
+            yt_player.playVideo();
+            wait(record_start).then(() => {
+              recorder.start();
+              console.log("record start");
+              wait(record_length).then(() => {
+                recorder.stop();
+                console.log("record stop");
+              });
+            });
+          },
+          // onchange
+          event => {
+            console.log(event.data);
+            if (event.data == YT.PlayerState.ENDED) {
+              av_stream.getTracks().forEach(track => track.stop());
+              var blob = new Blob(av_data, {type: "video/webm"});
+              playback = document.getElementById("playback");
+              playback.src = URL.createObjectURL(blob);
+              playback.play();
+              playback.onended = event => {
+                stage.classList.add("hide");
+                next_card.classList.remove("hide");
+              }
+            }
+          });
+      }
+
+      function makeYTPlayer(vid, onready, onchange) {
+        return new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: 'M7lc1UVf-VE',
+          videoId: vid,
+          // playerVars: {
+          //   autoplay: 1,
+          //   controls: 1,
+          // },
           events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
+            'onReady': onready,
+            'onStateChange': onchange,
           },
-          playerVars: {
-            // origin: 'file://',
-            autoplay: 1,
-            // controls: 1,
-            // enablejsapi: 1,
-          }
         });
       }
 
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        console.log("ready");
-        event.target.playVideo();
-      }
+      start.onclick = function () {
+        welcome.remove();
+        level1.classList.remove("hide");
+      };
 
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        console.log("change", event.data);
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 2000);
-          done = true;
-        }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
+      start_level1.onclick = function () {
+        level1.remove();
+        playSong("dfnCAmr569k", 26000, 7000, level2);
+      };
+
+      start_level2.onclick = function () {
+        level2.remove();
+        playSong("_Lbsz3WIlbU", 26000, 7000, level3);
+      };
+
+      start_level3.onclick = function () {
+        level3.remove();
+        playSong("_Lbsz3WIlbU", 26000, 7000);
+      };
     </script>
   </body>
 </html>
