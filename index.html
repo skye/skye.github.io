@@ -22,6 +22,20 @@
       </div>
     </div>
 
+    <div id="level2" class="card hide">
+      LEVEL 2
+      <div id="start-level2" class="button">
+        start
+      </div>
+    </div>
+
+    <div id="level3" class="card hide">
+      LEVEL 3
+      <div id="start-level3" class="button">
+        start
+      </div>
+    </div>
+
     <div id="stage" class="hide">
       <video id="webcam" autoplay muted></video>
       <div id="player-holder"><div id="player"></div></div>
@@ -34,10 +48,18 @@
     <!--         frameborder="0"></iframe> -->
 
     <script>
+      function get(id) {
+        return document.getElementById(id)
+      }
+
       var welcome = get("welcome");
       var start = get("start-button");
       var level1 = get("level1");
       var start_level1 = get("start-level1");
+      var level2 = get("level2");
+      var start_level2 = get("start-level2");
+      var level3 = get("level3");
+      var start_level3 = get("start-level3");
       var stage = get("stage");
       var webcam = document.getElementById('webcam');
 
@@ -78,11 +100,7 @@
         return new Promise(resolve => setTimeout(resolve, delayInMS));
       }
 
-      function get(id) {
-        return document.getElementById(id)
-      }
-
-      function playSong(vid, record_start, record_length) {
+      function playSong(vid, record_start, record_length, next_card) {
         stage.classList.remove("hide");
         webcam.srcObject = av_stream;
         yt_player = makeYTPlayer(
@@ -105,9 +123,13 @@
             if (event.data == YT.PlayerState.ENDED) {
               av_stream.getTracks().forEach(track => track.stop());
               var blob = new Blob(av_data, {type: "video/webm"});
-              var playback = document.getElementById("playback");
+              playback = document.getElementById("playback");
               playback.src = URL.createObjectURL(blob);
               playback.play();
+              playback.onended = event => {
+                stage.classList.add("hide");
+                next_card.classList.remove("hide");
+              }
             }
           });
       }
@@ -135,8 +157,17 @@
 
       start_level1.onclick = function () {
         level1.remove();
+        playSong("dfnCAmr569k", 26000, 7000, level2);
+      };
+
+      start_level2.onclick = function () {
+        level2.remove();
+        playSong("_Lbsz3WIlbU", 26000, 7000, level3);
+      };
+
+      start_level3.onclick = function () {
+        level3.remove();
         playSong("_Lbsz3WIlbU", 26000, 7000);
-        // playSong("Z-yJTjbswhw", 2000, 2000);
       };
     </script>
   </body>
