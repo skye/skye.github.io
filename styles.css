@@ -30,18 +30,16 @@
   z-index: -1;
 }
 
-#player-holder {
+#player {
   float: right;
   margin-top: 250px;
 }
 
 #webcam {
-  float: left;
   margin-top: 250px;
 }
 
 #playback {
-  float: left;
   width: 200px;
 }
 

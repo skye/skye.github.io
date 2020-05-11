@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>MEELY'S B-DAY KARAOKE JAMBOREE</title>
-    <link rel="stylesheet" href="styles.css?v=1.0">
+    <link rel="stylesheet" href="styles.css">
   </head>
 
   <body>
@@ -36,13 +36,16 @@
       </div>
     </div>
 
-    <div id="stage" class="hide">
-      <video id="webcam" autoplay muted></video>
-      <div id="player-holder"><div id="player"></div></div>
-      <video id="playback"></video>
+    <div id="bday" class="card hide">
+      <span>happy birthday meely :)</span>
     </div>
 
-    <div id="player"></div>
+    <div id="stage" class="hide">
+      <video id="webcam" autoplay muted></video>
+      <div id="player"><div></div></div>
+      <video id="playback" class="hide"></video>
+    </div>
+
     <!-- <iframe id="player" type="text/html" width="640" height="390" -->
     <!--         src="https://www.youtube.com/embed/_Lbsz3WIlbU?enablejsapi=1&controls=0&autoplay=1&mute=1" -->
     <!--         frameborder="0"></iframe> -->
@@ -60,12 +63,15 @@
       var start_level2 = get("start-level2");
       var level3 = get("level3");
       var start_level3 = get("start-level3");
+      var bday = get("bday");
       var stage = get("stage");
-      var webcam = document.getElementById('webcam');
+      var webcam = get("webcam");
+      var player = get("player");
+      var playback = get("playback");
 
       // Init youtube
       var tag = document.createElement('script');
-      tag.src = "http://www.youtube.com/iframe_api";
+      tag.src = "https://www.youtube.com/iframe_api";
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       var yt_ready = false;
@@ -87,7 +93,8 @@
       navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(
         function (stream) {
           av_stream = stream;
-          recorder = new MediaRecorder(stream, {mimeType: "video/webm"});
+          webcam.srcObject = av_stream;
+          recorder = new MediaRecorder(av_stream, {mimeType: "video/webm"});
           recorder.ondataavailable = event => {
             if (event.data.size > 0) {
               av_data.push(event.data);
@@ -102,7 +109,7 @@
 
       function playSong(vid, record_start, record_length, next_card) {
         stage.classList.remove("hide");
-        webcam.srcObject = av_stream;
+        var yt_player;
         yt_player = makeYTPlayer(
           vid,
           // onready
@@ -121,13 +128,14 @@
           event => {
             console.log(event.data);
             if (event.data == YT.PlayerState.ENDED) {
-              av_stream.getTracks().forEach(track => track.stop());
               var blob = new Blob(av_data, {type: "video/webm"});
-              playback = document.getElementById("playback");
+              av_data = []
               playback.src = URL.createObjectURL(blob);
+              playback.classList.remove("hide");
               playback.play();
               playback.onended = event => {
                 stage.classList.add("hide");
+                playback.classList.add("hide");
                 next_card.classList.remove("hide");
               }
             }
@@ -135,7 +143,10 @@
       }
 
       function makeYTPlayer(vid, onready, onchange) {
-        return new YT.Player('player', {
+        var div = document.createElement("div");
+        div.id = "ytplayer";
+        player.children[0].replaceWith(div);
+        return new YT.Player('ytplayer', {
           height: '390',
           width: '640',
           videoId: vid,
@@ -157,17 +168,18 @@
 
       start_level1.onclick = function () {
         level1.remove();
-        playSong("dfnCAmr569k", 26000, 7000, level2);
+        playSong("_Lbsz3WIlbU", 2000, 2000, level2);
       };
 
       start_level2.onclick = function () {
         level2.remove();
-        playSong("_Lbsz3WIlbU", 26000, 7000, level3);
+        playSong("_Lbsz3WIlbU", 2000, 3000, level3);
       };
 
       start_level3.onclick = function () {
         level3.remove();
-        playSong("_Lbsz3WIlbU", 26000, 7000);
+        playSong("_Lbsz3WIlbU", 2000, 3000, bday);
+        // playSong("_Lbsz3WIlbU", 26000, 7000);
       };
     </script>
   </body>
