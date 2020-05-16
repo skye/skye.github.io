@@ -51,6 +51,13 @@
   100% { margin-top: -1200px; }
 }
 
+.disco {
+  height: 200px;
+  background-size: 30%;
+  background-image: url("images/disco_ball.gif");
+  background-repeat: repeat-x;
+}
+
 .resp-wrapper {
   max-width: 980px;
   position: relative;
