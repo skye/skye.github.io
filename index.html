@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <div id="curtain">
+    <div id="curtain" class="curtain-up">
       <img src="images/curtain.png">
     </div>
 
@@ -31,14 +31,22 @@
     </div>
 
     <div id="level2" class="resp-wrapper card hide">
-      LEVEL 2
+      <p>LEVEL 2</p>
+      <p>
+        Song: Sixteen Tons<br>
+        Artist: Tennessee Ernie Ford
+      </p>
       <div id="start-level2" class="button">
         start
       </div>
     </div>
 
     <div id="level3" class="resp-wrapper card hide">
-      LEVEL 3
+      <p>LEVEL 3</p>
+      <p>
+        Final challenge!
+        Song: ???
+      </p>
       <div id="start-level3" class="button">
         start
       </div>
@@ -197,9 +205,9 @@
             curtain.removeEventListener("transitionend", listener2);
             after();
           }, false);
-          wait(500).then(() => curtain.style.marginTop = "-1300px");
+          wait(500).then(() => curtain.className = "curtain-up");
         }, false);
-        curtain.style.marginTop = 0;
+        curtain.className = "curtain-down";
       }
 
       function level_click(vid, level_card, next_card) {
