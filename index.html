@@ -67,7 +67,6 @@
             <div class="video-standard">
                 <video id="webcam" autoplay muted></video>
             </div>
-            <video id="playback" class="video-standard hide">autoplay muted></video>
         </div>
     </div>
 
@@ -89,7 +88,6 @@
         var stage = get("stage");
         var webcam = get("webcam");
         var player = get("player");
-        var playback = get("playback");
 
         // Init youtube
         var tag = document.createElement('script');
@@ -162,7 +160,6 @@
                     stage.classList.add("hide");
                     webcam.src = null;
                     webcam.srcObject = av_stream;
-                    playback.classList.add("hide");
                     next_card.classList.remove("hide");
                     },
                     () => {});
