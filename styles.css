@@ -61,9 +61,9 @@
 
 .disco {
   height: 200px;
-  background-size: 30%;
+  background-size: 200px;
   background-image: url("images/disco_ball.gif");
-  background-repeat: repeat;
+  background-repeat: repeat-x;
 }
 
 .resp-wrapper {
