@@ -1,247 +1,247 @@
 <!doctype html>
 
 <html lang="en">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<head>
-	<meta charset="utf-8">
-	<title>MEELY'S B-DAY KARAOKE JAMBOREE</title>
-	<link rel="stylesheet" href="styles.css">
-	</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+    <meta charset="utf-8">
+    <title>MEELY'S B-DAY KARAOKE JAMBOREE</title>
+    <link rel="stylesheet" href="styles.css">
+    </head>
 
-	<body>
-	<div id="curtain" class="curtain-up">
-		<img src="images/curtain.png">
-	</div>
+    <body>
+    <div id="curtain" class="curtain-up">
+        <img src="images/curtain.png">
+    </div>
 
-	<div id="welcome" class="resp-wrapper card">
-		<p>welcome to meely's birthday karaoke jamboree!<p>
-		<p>~ * ~sing your way to the top ~ * ~</p>
-		<span id="enable-msg"><p>Allow webcam + microphone!</p></span>
-		<div id="start-button" class="button hide">START!</div>
-	</div>
+    <div id="welcome" class="resp-wrapper card">
+        <p>welcome to meely's birthday karaoke jamboree!<p>
+        <p>~ * ~sing your way to the top ~ * ~</p>
+        <span id="enable-msg"><p>Allow webcam + microphone!</p></span>
+        <div id="start-button" class="button hide">START!</div>
+    </div>
 
-	<div id="level1" class="resp-wrapper card hide">
-		<p>LEVEL 1</p>
-		<p>
-		Song: ...Ready For It?<br>
-		Artist: Taylor Swift
-		</p>
-		<div id="start-level1" class="button">
-		start
-		</div>
-	</div>
+    <div id="level1" class="resp-wrapper card hide">
+        <p>LEVEL 1</p>
+        <p>
+        Song: ...Ready For It?<br>
+        Artist: Taylor Swift
+        </p>
+        <div id="start-level1" class="button">
+        start
+        </div>
+    </div>
 
-	<div id="level2" class="resp-wrapper card hide">
-		<p>LEVEL 2</p>
-		<p>
-		Song: Sixteen Tons<br>
-		Artist: Tennessee Ernie Ford
-		</p>
-		<div id="start-level2" class="button">
-		start
-		</div>
-	</div>
+    <div id="level2" class="resp-wrapper card hide">
+        <p>LEVEL 2</p>
+        <p>
+        Song: Sixteen Tons<br>
+        Artist: Tennessee Ernie Ford
+        </p>
+        <div id="start-level2" class="button">
+        start
+        </div>
+    </div>
 
-	<div id="level3" class="resp-wrapper card hide">
-		<p>LEVEL 3</p>
-		<p>
-		Final challenge!
-		Song: ???
-		</p>
-		<div id="start-level3" class="button">
-		start
-		</div>
-	</div>
+    <div id="level3" class="resp-wrapper card hide">
+        <p>LEVEL 3</p>
+        <p>
+        Final challenge!
+        Song: ???
+        </p>
+        <div id="start-level3" class="button">
+        start
+        </div>
+    </div>
 
-	<div id="bday" class="resp-wrapper card hide">
-		<span>happy birthday meely!!</span>
-	</div>
+    <div id="bday" class="resp-wrapper card hide">
+        <span>happy birthday meely!!</span>
+    </div>
 
-	<div id="stage" class="hide">
-		<div class="disco"></div>
-		<div class="resp-wrapper">
-			<div id="player" class="video-standard">
-				<div>
-				</div>
-			</div>
-			<div class="video-standard">
-				<video id="webcam" autoplay muted></video>
-			</div>
-			<video id="playback" class="video-standard hide">autoplay muted></video>
-		</div>
-	</div>
+    <div id="stage" class="hide">
+        <div class="disco"></div>
+        <div class="resp-wrapper">
+            <div id="player" class="video-standard">
+                <div>
+                </div>
+            </div>
+            <div class="video-standard">
+                <video id="webcam" autoplay muted></video>
+            </div>
+            <video id="playback" class="video-standard hide">autoplay muted></video>
+        </div>
+    </div>
 
-	<script>
-		function get(id) {
-		return document.getElementById(id)
-		}
+    <script>
+        function get(id) {
+        return document.getElementById(id)
+        }
 
-		var welcome = get("welcome");
-		var enable_msg = get("enable-msg")
-		var start = get("start-button");
-		var level1 = get("level1");
-		var start_level1 = get("start-level1");
-		var level2 = get("level2");
-		var start_level2 = get("start-level2");
-		var level3 = get("level3");
-		var start_level3 = get("start-level3");
-		var bday = get("bday");
-		var stage = get("stage");
-		var webcam = get("webcam");
-		var player = get("player");
-		var playback = get("playback");
+        var welcome = get("welcome");
+        var enable_msg = get("enable-msg")
+        var start = get("start-button");
+        var level1 = get("level1");
+        var start_level1 = get("start-level1");
+        var level2 = get("level2");
+        var start_level2 = get("start-level2");
+        var level3 = get("level3");
+        var start_level3 = get("start-level3");
+        var bday = get("bday");
+        var stage = get("stage");
+        var webcam = get("webcam");
+        var player = get("player");
+        var playback = get("playback");
 
-		// Init youtube
-		var tag = document.createElement('script');
-		tag.src = "https://www.youtube.com/iframe_api";
-		var firstScriptTag = document.getElementsByTagName('script')[0];
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		var yt_ready = false;
-		function onYouTubeIframeAPIReady() {
-		yt_ready = true;
-		}
-		function waitForYT(cb) {
-		if (yt_ready) {
-			return cb();
-		} else {
-			return setTimeout(waitForYt(), 100);
-		}
-		}
+        // Init youtube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var yt_ready = false;
+        function onYouTubeIframeAPIReady() {
+        yt_ready = true;
+        }
+        function waitForYT(cb) {
+        if (yt_ready) {
+            return cb();
+        } else {
+            return setTimeout(waitForYt(), 100);
+        }
+        }
 
-		// Init AV + recorder
-		var av_stream;
-		var recorder;
-		var av_data = []
-		navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(
-		function (stream) {
-			av_stream = stream;
-			webcam.srcObject = av_stream;
-			recorder = new MediaRecorder(av_stream, {mimeType: "video/webm"});
-			recorder.ondataavailable = event => {
-			if (event.data.size > 0) {
-				av_data.push(event.data);
-			}
-			};
-			enable_msg.classList.add("hide");
-			waitForYT(() => start.classList.remove("hide"));
-		});
+        // Init AV + recorder
+        var av_stream;
+        var recorder;
+        var av_data = []
+        navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(
+        function (stream) {
+            av_stream = stream;
+            webcam.srcObject = av_stream;
+            recorder = new MediaRecorder(av_stream, {mimeType: "video/webm"});
+            recorder.ondataavailable = event => {
+            if (event.data.size > 0) {
+                av_data.push(event.data);
+            }
+            };
+            enable_msg.classList.add("hide");
+            waitForYT(() => start.classList.remove("hide"));
+        });
 
-		function wait(delayInMS) {
-		return new Promise(resolve => setTimeout(resolve, delayInMS));
-		}
+        function wait(delayInMS) {
+        return new Promise(resolve => setTimeout(resolve, delayInMS));
+        }
 
-		var yt_player;
-		function playSong(vid, record_start, record_length, next_card) {
-		yt_player = makeYTPlayer(
-			vid,
-			// onready
-			event => {
-			wait(record_start).then(() => {
-				recorder.start();
-				console.log("record start");
-				wait(record_length).then(() => {
-				recorder.stop();
-				console.log("record stop");
-				});
-			});
-			},
-			// onchange
-			event => {
-			console.log(event.data);
-			if (event.data == YT.PlayerState.ENDED) {
-				var blob = new Blob(av_data, {type: "video/webm"});
-				av_data = []
-				webcam.srcObject = null;
-				webcam.src = URL.createObjectURL(blob);
-				webcam.muted = false;
-				webcam.play()
-				webcam.onended = event => {
-				cueCurtain(
-					() => {
-					webcam.muted = true;
-					stage.classList.add("hide");
-					webcam.src = null;
-					webcam.srcObject = av_stream;
-					playback.classList.add("hide");
-					next_card.classList.remove("hide");
-					},
-					() => {});
-				};
-				// playback.src = URL.createObjectURL(blob);
-				// playback.classList.remove("hide");
-				// playback.play();
-				// playback.onended = event => {
-				//   stage.classList.add("hide");
-				//   playback.classList.add("hide");
-				//   next_card.classList.remove("hide");
-				// }
-			}
-			});
-		}
+        var yt_player;
+        function playSong(vid, record_start, record_length, next_card) {
+        yt_player = makeYTPlayer(
+            vid,
+            // onready
+            event => {
+            wait(record_start).then(() => {
+                recorder.start();
+                console.log("record start");
+                wait(record_length).then(() => {
+                recorder.stop();
+                console.log("record stop");
+                });
+            });
+            },
+            // onchange
+            event => {
+            console.log(event.data);
+            if (event.data == YT.PlayerState.ENDED) {
+                var blob = new Blob(av_data, {type: "video/webm"});
+                av_data = []
+                webcam.srcObject = null;
+                webcam.src = URL.createObjectURL(blob);
+                webcam.muted = false;
+                webcam.play()
+                webcam.onended = event => {
+                cueCurtain(
+                    () => {
+                    webcam.muted = true;
+                    stage.classList.add("hide");
+                    webcam.src = null;
+                    webcam.srcObject = av_stream;
+                    playback.classList.add("hide");
+                    next_card.classList.remove("hide");
+                    },
+                    () => {});
+                };
+                // playback.src = URL.createObjectURL(blob);
+                // playback.classList.remove("hide");
+                // playback.play();
+                // playback.onended = event => {
+                //   stage.classList.add("hide");
+                //   playback.classList.add("hide");
+                //   next_card.classList.remove("hide");
+                // }
+            }
+            });
+        }
 
-		function makeYTPlayer(vid, onready, onchange) {
-		var div = document.createElement("div");
-		div.id = "ytplayer";
-		player.children[0].replaceWith(div);
-		return new YT.Player('ytplayer', {
-			height: '390',
-			width: '640',
-			videoId: vid,
-			// playerVars: {
-			//   autoplay: 1,
-			//   controls: 1,
-			// },
-			events: {
-			'onReady': onready,
-			'onStateChange': onchange,
-			},
-		});
-		}
+        function makeYTPlayer(vid, onready, onchange) {
+        var div = document.createElement("div");
+        div.id = "ytplayer";
+        player.children[0].replaceWith(div);
+        return new YT.Player('ytplayer', {
+            height: '390',
+            width: '640',
+            videoId: vid,
+            // playerVars: {
+            //   autoplay: 1,
+            //   controls: 1,
+            // },
+            events: {
+            'onReady': onready,
+            'onStateChange': onchange,
+            },
+        });
+        }
 
-		function cueCurtain(behind, after) {
-		curtain.addEventListener("transitionend", function listener() {
-			curtain.removeEventListener("transitionend", listener);
-			behind();
-			curtain.addEventListener("transitionend", function listener2 () {
-			curtain.removeEventListener("transitionend", listener2);
-			after();
-			}, false);
-			wait(500).then(() => curtain.className = "curtain-up");
-		}, false);
-		curtain.className = "curtain-down";
-		}
+        function cueCurtain(behind, after) {
+        curtain.addEventListener("transitionend", function listener() {
+            curtain.removeEventListener("transitionend", listener);
+            behind();
+            curtain.addEventListener("transitionend", function listener2 () {
+            curtain.removeEventListener("transitionend", listener2);
+            after();
+            }, false);
+            wait(500).then(() => curtain.className = "curtain-up");
+        }, false);
+        curtain.className = "curtain-down";
+        }
 
-		function level_click(vid, level_card, next_card) {
-		cueCurtain(
-			() => {
-			level_card.remove();
-			stage.classList.remove("hide");
-			playSong(vid, 1000, 2000, next_card);
-			},
-			() => {
-			yt_player.playVideo();
-			});
-		}
+        function level_click(vid, level_card, next_card) {
+        cueCurtain(
+            () => {
+            level_card.remove();
+            stage.classList.remove("hide");
+            playSong(vid, 1000, 2000, next_card);
+            },
+            () => {
+            yt_player.playVideo();
+            });
+        }
 
-		start.onclick = function () {
-		welcome.remove();
-		level1.classList.remove("hide");
-		};
+        start.onclick = function () {
+        welcome.remove();
+        level1.classList.remove("hide");
+        };
 
-		start_level1.onclick = function () {
-		level_click("_Lbsz3WIlbU", level1, level2);
-		// level_click("tw9TtZy_Mt8", level1, level2);
-		};
+        start_level1.onclick = function () {
+        level_click("_Lbsz3WIlbU", level1, level2);
+        // level_click("tw9TtZy_Mt8", level1, level2);
+        };
 
-		start_level2.onclick = function () {
-		level_click("_Lbsz3WIlbU", level2, level3);
-		// playSong("_Lbsz3WIlbU", 26000, 7000);
-		};
+        start_level2.onclick = function () {
+        level_click("_Lbsz3WIlbU", level2, level3);
+        // playSong("_Lbsz3WIlbU", 26000, 7000);
+        };
 
-		start_level3.onclick = function () {
-		level_click("_Lbsz3WIlbU", level3, bday);
-		// level_click("sjsP1wFNcC8", level3, bday);
-		};
-	</script>
-	</body>
+        start_level3.onclick = function () {
+        level_click("_Lbsz3WIlbU", level3, bday);
+        // level_click("sjsP1wFNcC8", level3, bday);
+        };
+    </script>
+    </body>
 </html>
