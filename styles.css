@@ -155,7 +155,7 @@ footer {
     transition: top 2s ease-out;
 }
 .curtain-up {
-    top: -100vw;
+    top: -100vh;
 }
 .curtain-down {
     top: 0;
