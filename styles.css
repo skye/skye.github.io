@@ -51,10 +51,6 @@ html {
     background-repeat: repeat-x;
 }
 
-.hide {
-  display: none;
-}
-
 /*##################################################*/
 /* card section */
 /*##################################################*/
@@ -163,3 +159,8 @@ footer {
     width:1700px;
     height: 1200px;
 }
+
+.hide {
+  display: none;
+}
+
