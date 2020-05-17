@@ -1,106 +1,165 @@
-.card {
-  font-size: 48px;
-  background: green;
-/*  width: 800px;
-  height: 500px;*/
-  text-align: center;
-  /*margin-left: -400px;*/
-  /*top: 30%;*/
-  /*left: 50%;*/
-  /*position: absolute;*/
-  box-sizing: border-box;
-  /*padding-top: 80px;*/
-/*  margin-left: auto;
-  margin-right: auto;*/
+
+/*##################################################*/
+/* general */
+/*##################################################*/
+
+@import url('https://fonts.googleapis.com/css2?family=Bellota:wght@400;700&family=Coiny&family=Concert+One&family=Kirang+Haerang&family=Supermercado+One&display=swap');
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Supermercado One', sans-serif;
+    letter-spacing: 0.15em;
+    /*font-weight: bold;*/
+}
+
+p, a {
+    font-family: 'Concert One', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .button {
-  background: lightblue;
-  width: 200px;
-  margin: 0 auto;
-  margin-top: 80px;
+    background-color: #77DBE7;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 2em;
+    letter-spacing: 0.3em;
+    color: #0F5B64;
+    border-radius: .25rem;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
 }
 
-#stage {
-  background: black;
-  overflow:auto;
-  max-width: 1700px;
-  margin-top: 10%;
-  margin-left: auto;
-  margin-right: auto;
+.button:hover {
+    opacity: 70%;
 }
 
-#curtain {
-  position: absolute;
-  z-index: 1;
-  height: 1200px;
-  left: 50%;
-  margin-left: -850px;
-  transition: top 2s ease-out;
+.highlight {
+    display: inline-block;
+    padding: 0.5em;
+    color: #0F5B64;
+    background-color: #77DBE7;
 }
-.curtain-up {
-  top: -1300px;
-}
-.curtain-down {
-  top: 0px;
-}
-
-#curtain img {
-  width:1700px;
-  height: 1200px;
-}
-/* .curtain-anim { */
-/*   animation: 4s ease-out 0s 1 normal forwards running move_curtain; */
-/* } */
-/* @keyframes move_curtain { */
-/*   0% { margin-top: -1200px; } */
-/*   40% { margin-top: 0px; } */
-/*   50% { margin-top: 0px; } */
-/*   100% { margin-top: -1200px; } */
-/* } */
 
 .disco {
-  height: 200px;
-  background-size: 200px;
-  background-image: url("images/disco_ball.gif");
-  background-repeat: repeat-x;
-}
-
-.resp-wrapper {
-  max-width: 980px;
-  position: relative;
-  margin: 0 auto;
-  /*border: 1px solid green;*/
-}
-
-.video-standard {
-    float: right;
-    height: 300px;
-    width: 47%;
-    /*border: 1px solid #000;*/
-    margin: 10px;
-}
-
-.video-standard iframe, .video-standard video {
-    width: 100%;
-    height: 100%;
-}
-
-@media (max-width:767px) {
-    .video-standard {
-        float: none;
-        width: 80%;
-        margin: 0 auto;
-        padding-bottom: 10px;
-    }
-}
-
-.clearfix:before,
-.clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+    /*height: 129px;*/
+    height: 200px;
+    background-size: 200px;
+    background-image: url("images/disco_for_gif.gif");
+    background-repeat: repeat-x;
 }
 
 .hide {
   display: none;
+}
+
+/*##################################################*/
+/* card section */
+/*##################################################*/
+
+.card {
+    background: white;
+    padding: 2rem;
+    /* grid styles */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-items: center;
+    text-align: center;
+}
+
+.card > * {
+    color: #DC6AD6;
+}
+
+.card > article > h1 {
+    font-size: 3rem;
+}
+
+.card > article > h2 {
+    font-size: 2rem;
+    color: #0F5B64;
+}
+
+.card > article > a {
+    padding: 1rem;
+    margin-top: .75rem;
+}
+
+/*##################################################*/
+/* videos styles */
+/*##################################################*/
+
+.videos {
+    padding: 2rem;
+}
+
+.videos > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-gap: 4rem;
+}
+
+.videos > ul > li {
+    display: block;
+}
+
+.videos > ul > li > div > iframe, video {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border: 10px solid #77DBE7;
+    border-radius: 2rem;
+    object-fit: contain;
+}
+
+.videos > ul > li > p {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 1rem .75rem;
+    color: #666666;
+}
+
+.videos > ul > li > a {
+    padding: .5rem 1rem;
+    margin: .5rem;
+}
+
+/* footer */
+footer {
+    background-color: #333;
+    padding: .75rem;
+    color: white;
+    text-align: center;
+    font-size: .75rem;
+}
+
+/*###############################*/
+
+#stage {
+    overflow:auto;
+    max-width: 1700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#curtain {
+    position: absolute;
+    z-index: 1;
+    height: 1200px;
+    left: 50%;
+    margin-left: -850px;
+    transition: top 2s ease-out;
+}
+.curtain-up {
+    top: -1300px;
+}
+.curtain-down {
+    top: 0px;
+}
+
+#curtain img {
+    width:1700px;
+    height: 1200px;
 }

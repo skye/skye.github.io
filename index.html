@@ -9,66 +9,56 @@
     </head>
 
     <body>
-    <div id="curtain" class="curtain-up">
-        <img src="images/curtain.png">
-    </div>
 
-    <div id="welcome" class="resp-wrapper card">
-        <p>welcome to meely's birthday karaoke jamboree!<p>
-        <p>~ * ~sing your way to the top ~ * ~</p>
-        <span id="enable-msg"><p>Allow webcam + microphone!</p></span>
-        <div id="start-button" class="button hide">START!</div>
-    </div>
+    <main class="wrapper">
+        <section id="curtain" class="curtain-up">
+            <img src="images/curtain.png">
+        </section>
+        <section class="disco"></section>
+        <section id="welcome" class="card">
+            <article>
+                <h1>welcome to meely's<br>birthday karaoke jamboree<h1>
+                <h2>your mission: to sing your way to the top!</h2>
+                <span id="enable-msg"><h2 class="highlight">allow webcam + microphone!</h2></span>
+                <a id="start-button" class="button hide">START</a>
+            </article>
+        </section>
+        <section id="level1" class="card hide">
+            <article>
+                <h1>LEVEL 1</h1>
+                <h2>song: ...ready for it?<br>artist: taylor swift</h2>
+                <a id="start-level1" class="button">START</a>
+            </article>
+        </section>
+        <section id="level2" class="card hide">
+            <article>
+                <h1>LEVEL 2</h1>
+                <h2>song: sixteen tons<br>artist: tennessee ernie ford</h2>
+                <a id="start-level2" class="button">START</a>
+            </article>
+        </section>
+        <section id="level3" class="card hide">
+            <article>
+                <h1>LEVEL 3: THE FINAL CHALLENGE</h1>
+                <h2>song: ????<br>artist: taylor swift</h2>
+                <a id="start-level3" class="button">START</a>
+            </article>
+        </section>
+        <section id="stage" class="videos hide">
+            <ul>
+                <li>
+                    <div id="player">
+                        <div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <video id="webcam" autoplay muted></video>
+                </li>
+            </ul>
+        </section>
+    </main>
 
-    <div id="level1" class="resp-wrapper card hide">
-        <p>LEVEL 1</p>
-        <p>
-        Song: ...Ready For It?<br>
-        Artist: Taylor Swift
-        </p>
-        <div id="start-level1" class="button">
-        start
-        </div>
-    </div>
-
-    <div id="level2" class="resp-wrapper card hide">
-        <p>LEVEL 2</p>
-        <p>
-        Song: Sixteen Tons<br>
-        Artist: Tennessee Ernie Ford
-        </p>
-        <div id="start-level2" class="button">
-        start
-        </div>
-    </div>
-
-    <div id="level3" class="resp-wrapper card hide">
-        <p>LEVEL 3</p>
-        <p>
-        Final challenge!
-        Song: ???
-        </p>
-        <div id="start-level3" class="button">
-        start
-        </div>
-    </div>
-
-    <div id="bday" class="resp-wrapper card hide">
-        <span>happy birthday meely!!</span>
-    </div>
-
-    <div id="stage" class="hide">
-        <div class="disco"></div>
-        <div class="resp-wrapper">
-            <div id="player" class="video-standard">
-                <div>
-                </div>
-            </div>
-            <div class="video-standard">
-                <video id="webcam" autoplay muted></video>
-            </div>
-        </div>
-    </div>
 
     <script>
         function get(id) {
