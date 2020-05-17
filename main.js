@@ -59,44 +59,53 @@ function wait(delayInMS) {
 }
 
 var yt_player;
-function playSong(vid, record_start, record_length, next_card) {
+var song_urls = [];
+function playSong(vid, replay_start, replay_length, next_card) {
   yt_player = makeYTPlayer(
       vid,
       // onready
       event => {
-        wait(record_start).then(() => {
-          recorder.start();
-          console.log("record start");
-          wait(record_length).then(() => {
-            recorder.stop();
-            console.log("record stop");
-          });
-        });
+        console.log("recorder start");
+        recorder.start();
       },
       // onchange
       event => {
         console.log(event.data);
         if (event.data == YT.PlayerState.ENDED) {
-          var blob = new Blob(av_data, {type: "video/webm"});
-          av_data = []
-          var url = URL.createObjectURL(blob);
-          replay_vids.forEach(rp => {
-            rp.src = url;
-          });
-          var intro_ms = 1000;
-          wait(2200).then(() => {
-            replay_intro.className = "instant-replay-color1";
-            replay.className = "";
-            wait(intro_ms).then(() => {
-              replay_intro.className = "instant-replay-color2";
-              wait(intro_ms).then(() => {
-                replay_intro.className = "instant-replay-color3";
-                wait(1500).then(() => {
+          console.log("recorder end");
+          recorder.stop();
+          recorder.onstop = event => {
+            console.log(av_data);
+            var blob = new Blob(av_data, {type: "video/webm"});
+            av_data = []
+            var url = URL.createObjectURL(blob);
+            song_urls.push(url);
+            replay_vids.forEach(rp => {
+              rp.src = url;
+            });
+            var intro_ms = 1000;
+            wait(2200)
+                .then(() => {
+                  replay_intro.className = "instant-replay-color1";
+                  replay.className = "";
+                  return wait(intro_ms)
+                })
+                .then(() => {
+                  replay_intro.className = "instant-replay-color2";
+                  return wait(intro_ms);
+                })
+                .then(() => {
+                  replay_intro.className = "instant-replay-color3";
+                  return wait(1500);
+                })
+                .then(() => {
                   replay_intro.className = "hide";
                   replay_vids.forEach(rp => {
                     rp.play();
                   });
+                  console.log(replay_vids[0].ended);
                   replay_vids[0].onended = event => {
+                    console.log("ended");
                     cueCurtain(
                         () => {
                           replay.className = "hide";
@@ -106,19 +115,17 @@ function playSong(vid, record_start, record_length, next_card) {
                         () => {});
                   };
                 });
-              });
-            });
-          });
-          webcam.onended = event => {
-            cueCurtain(
-                () => {
-                  webcam.muted = true;
-                  stage.classList.add("hide");
-                  webcam.src = null;
-                  webcam.srcObject = av_stream;
-                  next_card.classList.remove("hide");
-                },
-                () => {});
+            webcam.onended = event => {
+              cueCurtain(
+                  () => {
+                    webcam.muted = true;
+                    stage.classList.add("hide");
+                    webcam.src = null;
+                    webcam.srcObject = av_stream;
+                    next_card.classList.remove("hide");
+                  },
+                  () => {});
+            };
           };
         }
       });
