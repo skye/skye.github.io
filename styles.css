@@ -183,11 +183,11 @@ footer {
   left: 0;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: min-content;
 }
 .instant-replay-video {
-  width: 26vw;
+  width: 34vw;
 }
 
 #instant-replay-intro {
