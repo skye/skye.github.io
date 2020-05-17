@@ -145,18 +145,20 @@ footer {
 }
 
 #curtain {
+    background: url("images/curtain.png") repeat-x;
+    background-size: auto 100%;
     position: absolute;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
     z-index: 1;
-    height: 1200px;
-    left: 50%;
-    margin-left: -850px;
     transition: top 2s ease-out;
 }
 .curtain-up {
-    top: -1300px;
+    top: -100vw;
 }
 .curtain-down {
-    top: 0px;
+    top: 0;
 }
 
 #curtain img {
