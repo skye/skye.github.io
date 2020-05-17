@@ -89,7 +89,7 @@ function playSong(vid, replay_start, replay_length, next_card) {
         wait(2200)
             .then(() => {
               replay_intro.className = "instant-replay-color1";
-              replay.className = "";
+              stage.classList.add("hide");
               return wait(intro_ms)
             })
             .then(() => {
@@ -97,12 +97,11 @@ function playSong(vid, replay_start, replay_length, next_card) {
               return wait(intro_ms);
             })
             .then(() => {
+              replay.className = "";
               replay_intro.className = "instant-replay-color3";
               return wait(1500);
             })
             .then(() => {
-              replay_vids[0].onended = event => {
-              };
               replay_vids.forEach(rp => {
                 rp.play();
               });
@@ -116,7 +115,6 @@ function playSong(vid, replay_start, replay_length, next_card) {
               cueCurtain(
                   () => {
                     replay.className = "hide";
-                    stage.classList.add("hide");
                     next_card.classList.remove("hide");
                   },
                   () => {});
