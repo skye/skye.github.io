@@ -63,8 +63,6 @@ var song_urls = [];
 function playSong(vid, replay_start, replay_length, next_card) {
   yt_player = makeYTPlayer(vid);
   yt_player.addEventListener("onReady", event => {
-    console.log("recorder start");
-    recorder.start();
   });
   yt_player.addEventListener("onStateChange", event => {
     console.log(event.data);
@@ -81,7 +79,9 @@ function playSong(vid, replay_start, replay_length, next_card) {
         song_urls.push(url);
         replay_vids.forEach(rp => {
           rp.src = url;
+          rp.currentTime = replay_start;
         });
+        // download(url);
         var intro_ms = 1000;
         wait(2200)
             .then(() => {
@@ -99,34 +99,53 @@ function playSong(vid, replay_start, replay_length, next_card) {
             })
             .then(() => {
               replay_vids[0].onended = event => {
-                console.log("ended");
-                cueCurtain(
-                    () => {
-                      replay.className = "hide";
-                      stage.classList.add("hide");
-                      next_card.classList.remove("hide");
-                    },
-                    () => {});
               };
               replay_intro.className = "hide";
               replay_vids.forEach(rp => {
                 rp.play();
               });
+              return wait(replay_length);
+            }).then(() => {
+              console.log("ended");
+              replay_vids.forEach(rp => {
+                rp.pause();
+              });
+              cueCurtain(
+                  () => {
+                    replay.className = "hide";
+                    stage.classList.add("hide");
+                    next_card.classList.remove("hide");
+                  },
+                  () => {});
             });
-        webcam.onended = event => {
-          cueCurtain(
-              () => {
-                webcam.muted = true;
-                stage.classList.add("hide");
-                webcam.src = null;
-                webcam.srcObject = av_stream;
-                next_card.classList.remove("hide");
-              },
-              () => {});
-        };
+        // webcam.onended = event => {
+        //   cueCurtain(
+        //       () => {
+        //         webcam.muted = true;
+        //         stage.classList.add("hide");
+        //         webcam.src = null;
+        //         webcam.srcObject = av_stream;
+        //         next_card.classList.remove("hide");
+        //       },
+        //       () => {});
+        // };
       };
     }
   });
+}
+
+function download(url) {
+  // var blob = new Blob(av_data, {
+  //   type: "video/webm"
+  // });
+  // var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  a.href = url;
+  a.download = "test.webm";
+  a.click();
+  window.URL.revokeObjectURL(url);
 }
 
 function makeYTPlayer(vid) {
@@ -170,6 +189,8 @@ function level_click(vid, level_card, next_card) {
       },
       () => {
         yt_player.playVideo();
+        console.log("recorder start");
+        recorder.start();
       });
 }
 
