@@ -18,6 +18,9 @@ var player = get("player");
 var replay_intro = get("instant-replay-intro");
 var replay = get("instant-replay");
 var replay_vids = Array.from(document.getElementsByClassName("instant-replay-video"));
+var dl0 = get("dl0");
+var dl1 = get("dl1");
+var dl2 = get("dl2");
 
 // Init youtube
 var tag = document.createElement('script');
@@ -100,10 +103,10 @@ function playSong(vid, replay_start, replay_length, next_card) {
             .then(() => {
               replay_vids[0].onended = event => {
               };
-              replay_intro.className = "hide";
               replay_vids.forEach(rp => {
                 rp.play();
               });
+              replay_intro.className = "hide";
               return wait(replay_length);
             }).then(() => {
               console.log("ended");
@@ -213,3 +216,15 @@ start_level3.onclick = function () {
   level_click("_Lbsz3WIlbU", level3, bday);
   // level_click("sjsP1wFNcC8", level3, bday);
 };
+
+dl0.onclick = function () {
+  download(song_urls[0]);
+}
+
+dl1.onclick = function () {
+  download(song_urls[1]);
+}
+
+dl2.onclick = function () {
+  download(song_urls[2]);
+}
