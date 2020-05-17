@@ -85,13 +85,13 @@
         <section id="stage" class="videos hide">
             <ul>
                 <li>
-                    <div id="player">
+                    <div id="player" class="video">
                         <div>
                         </div>
                     </div>
                 </li>
                 <li>
-                    <video id="webcam" autoplay muted></video>
+                    <video id="webcam" autoplay muted class="video"></video>
                 </li>
             </ul>
         </section>
@@ -230,8 +230,8 @@
         div.id = "ytplayer";
         player.children[0].replaceWith(div);
         return new YT.Player('ytplayer', {
-          height: '390',
-          width: '640',
+          height: '100%',
+          // width: '640',
           videoId: vid,
           // playerVars: {
           //   autoplay: 1,
