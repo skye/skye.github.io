@@ -65,6 +65,9 @@ html {
     text-align: center;
 }
 
+.card .hide {
+    display: none;
+}
 .card > * {
     color: #DC6AD6;
 }
