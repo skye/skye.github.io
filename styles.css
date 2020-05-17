@@ -111,7 +111,7 @@ html {
     width: 100%;
     border: 10px solid #77DBE7;
     border-radius: 2rem;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .videos > ul > li > p {
