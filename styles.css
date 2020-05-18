@@ -109,7 +109,7 @@ html {
 .finale {
     margin-left: auto;
     margin-right: auto;
-    max-width: 1000px;
+    max-width: 1400px;
 }
 
 .message {
@@ -124,6 +124,10 @@ html {
 
 .message > h1, p {
     text-align: left;
+}
+
+.message > ul > li {
+    display: block;
 }
 
 .gif > img {
