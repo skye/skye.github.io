@@ -196,7 +196,7 @@ footer {
 }
 
 #curtain {
-    background: url("images/curtain.png") repeat-x;
+    background: url("images/curtain_lighter.png") repeat-x;
     background-size: auto 100%;
     position: absolute;
     left: 0;
