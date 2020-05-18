@@ -69,7 +69,7 @@ html {
 
 .card {
     background: white;
-    padding: 2rem;
+    margin: 2rem;
     /* grid styles */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -98,15 +98,6 @@ html {
     margin-top: .75rem;
 }
 
-.card > div > img, p {
-    position: relative;
-    overflow: hidden;
-    /*width: 100%;*/
-/*    max-width: 40vw;
-    min-width: 400px;*/
-    max-height: 80vh;
-}
-
 .card p {
     font-size: 1.5em;
 }
@@ -121,15 +112,30 @@ html {
     max-width: 1000px;
 }
 
-.finale > h1 {
+.message {
+    z-index: 1;
+}
+
+.message > h1 {
     font-size: 3rem;
     color: #DC6AD6;
     margin-bottom: 0;
-    text-align: center;
 }
 
-.finale > .card > div > p {
+.message > h1, p {
     text-align: left;
+}
+
+.gif > img {
+    position: relative;
+    overflow: hidden;
+    max-height: 80vh;
+}
+
+footer {
+    margin: 2rem;
+    text-align: center;
+    font-size: 1rem;
 }
 
 /*##################################################*/
@@ -173,12 +179,6 @@ html {
 
 .video {
   height: 40vh;
-}
-
-footer {
-    padding: 2rem;
-    text-align: center;
-    font-size: 1rem;
 }
 
 /*###############################*/
