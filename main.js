@@ -197,7 +197,7 @@ function level_click(vid, level_card, next_card) {
 
 start.onclick = function () {
   welcome.remove();
-  level1.classList.remove("hide");
+  bday.classList.remove("hide");
 };
 
 start_level1.onclick = function () {

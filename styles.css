@@ -22,15 +22,25 @@ html {
 
 .button {
     background-color: #77DBE7;
+    color: #0F5B64;
     text-decoration: none;
     font-weight: bold;
     font-size: 2em;
-    letter-spacing: 0.3em;
-    color: #0F5B64;
     border-radius: .25rem;
     text-align: center;
     display: inline-block;
     cursor: pointer;
+    margin: 0.75rem;
+}
+
+.button-start {
+    letter-spacing: 0.3em;
+}
+
+.button-dl {
+    font-family: 'Supermercado One', sans-serif;
+    padding: 0.75rem;
+    /*letter-spacing: 0.em;*/
 }
 
 .button:hover {
@@ -50,6 +60,7 @@ html {
     background-size: 200px;
     background-image: url("images/disco_for_gif.gif");
     background-repeat: repeat-x;
+    background-position: center;
 }
 
 /*##################################################*/
@@ -66,25 +77,59 @@ html {
     text-align: center;
 }
 
+.card > * {
+    color: #0F5B64;
+}
 .card .hide {
     display: none;
 }
-.card > * {
-    color: #DC6AD6;
-}
 
 .card > article > h1 {
+    color: #DC6AD6;
     font-size: 3rem;
 }
 
 .card > article > h2 {
     font-size: 2rem;
-    color: #0F5B64;
 }
 
 .card > article > a {
     padding: 1rem;
     margin-top: .75rem;
+}
+
+.card > div > img, p {
+    position: relative;
+    overflow: hidden;
+    /*width: 100%;*/
+/*    max-width: 40vw;
+    min-width: 400px;*/
+    max-height: 80vh;
+}
+
+.card p {
+    font-size: 1.5em;
+}
+
+/*##################################################*/
+/* bday grid styles */
+/*##################################################*/
+
+.finale {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px;
+}
+
+.finale > h1 {
+    font-size: 3rem;
+    color: #DC6AD6;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.finale > .card > div > p {
+    text-align: left;
 }
 
 /*##################################################*/
@@ -130,13 +175,10 @@ html {
   height: 40vh;
 }
 
-/* footer */
 footer {
-    background-color: #333;
-    padding: .75rem;
-    color: white;
+    padding: 2rem;
     text-align: center;
-    font-size: .75rem;
+    font-size: 1rem;
 }
 
 /*###############################*/
