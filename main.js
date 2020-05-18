@@ -113,6 +113,7 @@ function endSong(replay_start, replay_length, next_card) {
             rp.play();
             rp.currentTime = replay_start;
             console.log(rp.currentTime);
+            console.log(rp.currentTime);
           });
           replay_intro.className = "hide";
           console.log("done");
