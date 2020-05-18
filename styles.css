@@ -237,6 +237,19 @@ footer {
   width: 34vw;
 }
 
+.vid {
+    position: relative;
+}
+.instant-replay-tint {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 10;
+  background: rgba(255,0,0, 0.35);
+}
+
 #instant-replay-intro {
   height: 100vh;
   width: 100vw;
