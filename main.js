@@ -228,7 +228,7 @@ start.onclick = function () {
 
 start_level1.onclick = function () {
   if (debugging) {
-    level_click("_Lbsz3WIlbU", level1, level2, 5, 5, 6);
+    level_click("_Lbsz3WIlbU", level1, level2, 2, 3, 6);
   } else {
     replay_start = 100;
     replay_end = 124;
@@ -240,7 +240,7 @@ start_level1.onclick = function () {
 
 start_level2.onclick = function () {
   if (debugging) {
-    level_click("_Lbsz3WIlbU", level2, level3, 2000, 3000, 6, 12);
+    level_click("_Lbsz3WIlbU", level2, level3, 2, 3, 6, 20);
   } else {
     song_start = 6;
     replay_start = 21 - song_start;
@@ -253,7 +253,7 @@ start_level2.onclick = function () {
 
 start_level3.onclick = function () {
   if (debugging) {
-    level_click("_Lbsz3WIlbU", level3, bday);
+    level_click("_Lbsz3WIlbU", level3, bday, 2, 3, 6);
   } else {
     song_start = 10;
     replay_start = 153 - song_start;
