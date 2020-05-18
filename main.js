@@ -63,76 +63,67 @@ function wait(delayInMS) {
 
 var yt_player;
 var song_urls = [];
-function playSong(vid, replay_start, replay_length, next_card) {
+function setupSong(vid, replay_start, replay_length, next_card) {
   yt_player = makeYTPlayer(vid);
-  yt_player.addEventListener("onReady", event => {
-  });
   yt_player.addEventListener("onStateChange", event => {
     console.log(event.data);
     if (event.data == YT.PlayerState.ENDED) {
       // Sometimes fires twice
       if (recorder.state == "inactive") return;
-      console.log("recorder end");
-      recorder.stop();
-      recorder.onstop = event => {
-        console.log(av_data);
-        var blob = new Blob(av_data, {type: "video/webm"});
-        av_data = []
-        var url = URL.createObjectURL(blob);
-        song_urls.push(url);
-        replay_vids.forEach(rp => {
-          rp.src = url;
-          rp.currentTime = replay_start;
-        });
-        // download(url);
-        var intro_ms = 1000;
-        wait(2200)
-            .then(() => {
-              replay_intro.className = "instant-replay-color1";
-              stage.classList.add("hide");
-              return wait(intro_ms)
-            })
-            .then(() => {
-              replay_intro.className = "instant-replay-color2";
-              return wait(intro_ms);
-            })
-            .then(() => {
-              replay.className = "";
-              replay_intro.className = "instant-replay-color3";
-              return wait(1500);
-            })
-            .then(() => {
-              replay_vids.forEach(rp => {
-                rp.play();
-              });
-              replay_intro.className = "hide";
-              return wait(replay_length);
-            }).then(() => {
-              console.log("ended");
-              replay_vids.forEach(rp => {
-                rp.pause();
-              });
-              cueCurtain(
-                  () => {
-                    replay.className = "hide";
-                    next_card.classList.remove("hide");
-                  },
-                  () => {});
-            });
-        // webcam.onended = event => {
-        //   cueCurtain(
-        //       () => {
-        //         webcam.muted = true;
-        //         stage.classList.add("hide");
-        //         webcam.src = null;
-        //         webcam.srcObject = av_stream;
-        //         next_card.classList.remove("hide");
-        //       },
-        //       () => {});
-        // };
-      };
+      endSong(replay_start, replay_start, next_card);
     }
   });
+}
+
+function endSong(replay_start, replay_length, next_card) {
+  console.log("recorder end");
+  recorder.stop();
+  recorder.onstop = event => {
+    console.log(av_data);
+    var blob = new Blob(av_data, {type: "video/webm"});
+    av_data = []
+    var url = URL.createObjectURL(blob);
+    song_urls.push(url);
+    replay_vids.forEach(rp => {
+      rp.src = url;
+      rp.currentTime = replay_start;
+    });
+    // download(url);
+    var intro_ms = 1000;
+    wait(2200)
+        .then(() => {
+          replay_intro.className = "instant-replay-color1";
+          stage.classList.add("hide");
+          return wait(intro_ms)
+        })
+        .then(() => {
+          replay_intro.className = "instant-replay-color2";
+          return wait(intro_ms);
+        })
+        .then(() => {
+          replay.className = "";
+          replay_intro.className = "instant-replay-color3";
+          return wait(1500);
+        })
+        .then(() => {
+          replay_vids.forEach(rp => {
+            rp.play();
+          });
+          replay_intro.className = "hide";
+          return wait(replay_length);
+        }).then(() => {
+          console.log("ended");
+          replay_vids.forEach(rp => {
+            rp.pause();
+          });
+          cueCurtain(
+              () => {
+                replay.className = "hide";
+                next_card.classList.remove("hide");
+              },
+              () => {});
+        });
+  };
 }
 
 function download(url) {
@@ -181,38 +172,66 @@ function cueCurtain(behind, after) {
   curtain.className = "curtain-down";
 }
 
-function level_click(vid, level_card, next_card) {
+function level_click(vid, level_card, next_card, replay_start, replay_length,
+                     song_start, song_end) {
   cueCurtain(
       () => {
         level_card.remove();
         stage.classList.remove("hide");
-        playSong(vid, 1000, 2000, next_card);
+        setupSong(vid, replay_start, replay_length, next_card);
       },
       () => {
+        console.log("song_start", song_start);
+        if (song_start) {
+          yt_player.seekTo(song_start);
+        }
         yt_player.playVideo();
+        if (song_end) {
+          wait((song_end - song_start) * 1000).then(() => {
+            waitForTime(song_end, replay_start, replay_length, next_card);
+          });
+        }
         console.log("recorder start");
         recorder.start();
       });
 }
 
+function waitForTime(time, replay_start, replay_length, next_card) {
+  if (yt_player.getCurrentTime() >= time) {
+    yt_player.stopVideo();
+    endSong(replay_start, replay_length, next_card);
+  } else {
+    window.setTimeout(() => waitForTime(time, replay_start, replay_length, next_card), 200);
+  }
+}
+
 start.onclick = function () {
   welcome.remove();
-  bday.classList.remove("hide");
+  level1.classList.remove("hide");
 };
 
 start_level1.onclick = function () {
-  level_click("_Lbsz3WIlbU", level1, level2);
-  // level_click("tw9TtZy_Mt8", level1, level2);
+  // level_click("_Lbsz3WIlbU", level1, level2, 2000, 3000, 6, 12);
+  replay_start = 100;
+  replay_end = 124;
+  level_click("tw9TtZy_Mt8", level1, level2,
+              replay_start * 1000,
+              (replay_end - replay_start) * 1000);
 };
 
 start_level2.onclick = function () {
-  level_click("_Lbsz3WIlbU", level2, level3);
-  // playSong("_Lbsz3WIlbU", 26000, 7000);
+  // level_click("_Lbsz3WIlbU", level2, level3, 2000, 3000, 6, 12);
+  level_click("_Lbsz3WIlbU", level2, level3, 26000, 7000, 6);
 };
 
 start_level3.onclick = function () {
-  level_click("_Lbsz3WIlbU", level3, bday);
-  // level_click("sjsP1wFNcC8", level3, bday);
+  // level_click("_Lbsz3WIlbU", level3, bday);
+  replay_start = 153;
+  replay_end = 176;
+  level_click("sjsP1wFNcC8", level3, bday,
+              replay_start * 1000,
+              (replay_end - replay_start) * 1000,
+              10, 236);
 };
 
 dl0.onclick = function () {
