@@ -238,11 +238,12 @@ start_level2.onclick = function () {
   if (debugging) {
     level_click("_Lbsz3WIlbU", level2, level3, 2000, 3000, 6, 12);
   } else {
-    replay_start = 20;
-    replay_end = 46;
+    song_start = 6;
+    replay_start = 20 - song_start;
+    replay_end = 44 - song_start;
     level_click("_Lbsz3WIlbU", level2, level3,
                 replay_start, replay_end - replay_start,
-                6);
+                song_start);
   }
 };
 
@@ -250,12 +251,13 @@ start_level3.onclick = function () {
   if (debugging) {
     level_click("_Lbsz3WIlbU", level3, bday);
   } else {
-    replay_start = 153;
-    replay_end = 176;
+    song_start = 10;
+    replay_start = 153 - song_start;
+    replay_end = 176 - song_start;
     level_click("sjsP1wFNcC8", level3, bday,
                 replay_start,
                 replay_end - replay_start,
-                10, 236);
+                song_start, 236);
   }
 };
 
