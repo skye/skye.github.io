@@ -234,6 +234,7 @@ footer {
   grid-auto-rows: min-content;
 }
 .instant-replay-container {
+    position: relative;
   width: 34vw;
 }
 
@@ -260,40 +261,52 @@ footer {
   overflow: hidden;
 }
 #instant-replay-intro > h1 {
-  margin-top: 45vh;
-  margin-left: auto;
-  margin-right: auto;
-  /* font-family: 'Coiny', cursive; */
-  font-family: 'Fredoka One';
-  font-size: 70px;
-  font-weight: normal;
-  letter-spacing: 0;
-  border: 10px solid;
-  border-radius: 2rem;
-  width: fit-content;
-  padding: 15px;
+    margin-top: 45vh;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Concert One', sans-serif;
+    font-size: 3rem;
+    font-weight: normal;
+    letter-spacing: 0.3em;
+    border-radius: 2rem;
+    width: fit-content;
+    padding: 1em;
 }
 
+/* light purple #C9A7F9 */
+/* darker purple #b282f7 */
+
+/* teal #2cd9d1 */
+/* turquoise #3adeff */
+/* light turquoise #a5f0ff */
+/* toothpaste #c7fff9 */
+/* glow toothpaste #9bfff3 */
+/* subtle green #7cdbd3 */
+
+/* light pink #fee0f8 */
+/* mid pink #fdb8ee */
+/* dark pink #ff81e4 */
+
 .instant-replay-color1 {
-  background: #a442f5;
+  background: #fee0f8;
 }
 .instant-replay-color1 > h1 {
-  background: #925cff;
-  border-color: #451cd9;
-  color: #451cd9;
+  background: #ff81e4;
+  color: #fee0f8;
 }
 
 .instant-replay-color2 {
-  background: #20ba9b;
+  background: #2cd9d1;
 }
 .instant-replay-color2 > h1 {
-  background: #00d1e0;
-  border-color: #0066ff;
-  color: #0066ff;
+  background: #c7fff9;
+  color: #2cd9d1;
 }
 
 .instant-replay-color3 {
 }
+
 .instant-replay-color3 > h1 {
-  background: linear-gradient(to right, red, orange , yellow, #00ff00, cyan, blue, violet);
+  background: #c9a7f9;
+  color: #b282f7;
 }
