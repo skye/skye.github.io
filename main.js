@@ -110,7 +110,9 @@ function endSong(replay_start, replay_length, next_card) {
         .then(() => {
           console.log("playing rp");
           replay_vids.forEach(rp => {
-            rp.play();
+            if (rp.currentTime == replay_start) {
+              rp.play();
+            }
             rp.currentTime = replay_start;
             console.log(rp.currentTime);
           });
@@ -120,11 +122,9 @@ function endSong(replay_start, replay_length, next_card) {
           return wait(replay_length * 1000);
         }).then(() => {
           console.log("ended");
-          if (rp.currentTime == replay_start) {
             replay_vids.forEach(rp => {
               rp.pause();
             });
-          }
           cueCurtain(
               () => {
                 replay.className = "hide";
