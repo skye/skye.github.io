@@ -112,6 +112,8 @@ function endSong(replay_start, replay_length, next_card) {
           replay_vids.forEach(rp => {
             if (rp.currentTime == replay_start) {
               rp.play();
+            } else {
+              replay_length = 1;
             }
             rp.currentTime = replay_start;
             console.log(rp.currentTime);
@@ -241,7 +243,7 @@ start_level2.onclick = function () {
     level_click("_Lbsz3WIlbU", level2, level3, 2000, 3000, 6, 12);
   } else {
     song_start = 6;
-    replay_start = 20 - song_start;
+    replay_start = 21 - song_start;
     replay_end = 44 - song_start;
     level_click("_Lbsz3WIlbU", level2, level3,
                 replay_start, replay_end - replay_start,
@@ -255,7 +257,7 @@ start_level3.onclick = function () {
   } else {
     song_start = 10;
     replay_start = 153 - song_start;
-    replay_end = 176 - song_start;
+    replay_end = 176;
     level_click("sjsP1wFNcC8", level3, bday,
                 replay_start,
                 replay_end - replay_start,
