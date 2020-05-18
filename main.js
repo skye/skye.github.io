@@ -223,7 +223,7 @@ var debugging = false;
 
 start.onclick = function () {
   welcome.remove();
-  bday.classList.remove("hide");
+  level1.classList.remove("hide");
 };
 
 start_level1.onclick = function () {
