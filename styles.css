@@ -233,11 +233,11 @@ footer {
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: min-content;
 }
-.instant-replay-video {
+.instant-replay-container {
   width: 34vw;
 }
 
-.vid {
+.instant-replay-video {
     position: relative;
 }
 .instant-replay-tint {
