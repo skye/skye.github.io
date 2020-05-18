@@ -73,7 +73,6 @@ html {
     /* grid styles */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    align-items: center;
     text-align: center;
 }
 
@@ -130,10 +129,12 @@ html {
     display: block;
 }
 
+.gif {
+    align-items: left;
+}
 .gif > img {
     position: relative;
     overflow: hidden;
-    /*max-height: 80vh;*/
     width: 100%;
 }
 
