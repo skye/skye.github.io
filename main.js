@@ -70,7 +70,7 @@ function setupSong(vid, replay_start, replay_length, next_card) {
     if (event.data == YT.PlayerState.ENDED) {
       // Sometimes fires twice
       if (recorder.state == "inactive") return;
-      endSong(replay_start, replay_start, next_card);
+      endSong(replay_start, replay_length, next_card);
     }
   });
 }
@@ -113,7 +113,6 @@ function endSong(replay_start, replay_length, next_card) {
             rp.play();
             rp.currentTime = replay_start;
             console.log(rp.currentTime);
-            console.log(rp.currentTime);
           });
           replay_intro.className = "hide";
           console.log("done");
@@ -124,12 +123,12 @@ function endSong(replay_start, replay_length, next_card) {
           replay_vids.forEach(rp => {
             rp.pause();
           });
-          // cueCurtain(
-          //     () => {
-          //       replay.className = "hide";
-          //       next_card.classList.remove("hide");
-          //     },
-          //     () => {});
+          cueCurtain(
+              () => {
+                replay.className = "hide";
+                next_card.classList.remove("hide");
+              },
+              () => {});
         });
   };
 }
