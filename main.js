@@ -120,9 +120,11 @@ function endSong(replay_start, replay_length, next_card) {
           return wait(replay_length * 1000);
         }).then(() => {
           console.log("ended");
-          replay_vids.forEach(rp => {
-            rp.pause();
-          });
+          if (rp.currentTime == replay_start) {
+            replay_vids.forEach(rp => {
+              rp.pause();
+            });
+          }
           cueCurtain(
               () => {
                 replay.className = "hide";
@@ -133,7 +135,7 @@ function endSong(replay_start, replay_length, next_card) {
   };
 }
 
-function download(url) {
+function download(url, name) {
   // var blob = new Blob(av_data, {
   //   type: "video/webm"
   // });
@@ -142,7 +144,7 @@ function download(url) {
   document.body.appendChild(a);
   a.style = "display: none";
   a.href = url;
-  a.download = "test.webm";
+  a.download = name + ".webm";
   a.click();
   window.URL.revokeObjectURL(url);
 }
@@ -262,13 +264,13 @@ start_level3.onclick = function () {
 };
 
 dl0.onclick = function () {
-  download(song_urls[0]);
+  download(song_urls[0], "song1");
 }
 
 dl1.onclick = function () {
-  download(song_urls[1]);
+  download(song_urls[1], "song2");
 }
 
 dl2.onclick = function () {
-  download(song_urls[2]);
+  download(song_urls[2], "song3");
 }
