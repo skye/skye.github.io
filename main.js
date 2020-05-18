@@ -84,9 +84,11 @@ function endSong(replay_start, replay_length, next_card) {
     av_data = []
     var url = URL.createObjectURL(blob);
     song_urls.push(url);
+    console.log("loading rp");
     replay_vids.forEach(rp => {
       rp.src = url;
       rp.currentTime = replay_start;
+      console.log(rp.currentTime);
     });
     // download(url);
     var intro_ms = 1000;
@@ -106,22 +108,27 @@ function endSong(replay_start, replay_length, next_card) {
           return wait(1500);
         })
         .then(() => {
+          console.log("playing rp");
           replay_vids.forEach(rp => {
             rp.play();
+            rp.currentTime = replay_start;
+            console.log(rp.currentTime);
           });
           replay_intro.className = "hide";
-          return wait(replay_length);
+          console.log("done");
+          console.log(replay_length);
+          return wait(replay_length * 1000);
         }).then(() => {
           console.log("ended");
           replay_vids.forEach(rp => {
             rp.pause();
           });
-          cueCurtain(
-              () => {
-                replay.className = "hide";
-                next_card.classList.remove("hide");
-              },
-              () => {});
+          // cueCurtain(
+          //     () => {
+          //       replay.className = "hide";
+          //       next_card.classList.remove("hide");
+          //     },
+          //     () => {});
         });
   };
 }
@@ -197,6 +204,9 @@ function level_click(vid, level_card, next_card, replay_start, replay_length,
 }
 
 function waitForTime(time, replay_start, replay_length, next_card) {
+  if (yt_player.getPlayerState() != 1) {
+    return;
+  }
   if (yt_player.getCurrentTime() >= time) {
     yt_player.stopVideo();
     endSong(replay_start, replay_length, next_card);
@@ -205,33 +215,44 @@ function waitForTime(time, replay_start, replay_length, next_card) {
   }
 }
 
+var debugging = false;
+
 start.onclick = function () {
   welcome.remove();
   level1.classList.remove("hide");
 };
 
 start_level1.onclick = function () {
-  // level_click("_Lbsz3WIlbU", level1, level2, 2000, 3000, 6, 12);
-  replay_start = 100;
-  replay_end = 124;
-  level_click("tw9TtZy_Mt8", level1, level2,
-              replay_start * 1000,
-              (replay_end - replay_start) * 1000);
+  if (debugging) {
+    level_click("_Lbsz3WIlbU", level1, level2, 5, 5, 6);
+  } else {
+    replay_start = 100;
+    replay_end = 124;
+    level_click("tw9TtZy_Mt8", level1, level2,
+                replay_start,
+                replay_end - replay_start);
+  }
 };
 
 start_level2.onclick = function () {
-  // level_click("_Lbsz3WIlbU", level2, level3, 2000, 3000, 6, 12);
-  level_click("_Lbsz3WIlbU", level2, level3, 26000, 7000, 6);
+  if (debugging) {
+    level_click("_Lbsz3WIlbU", level2, level3, 2000, 3000, 6, 12);
+  } else {
+    level_click("_Lbsz3WIlbU", level2, level3, 26, 7, 6);
+  }
 };
 
 start_level3.onclick = function () {
-  // level_click("_Lbsz3WIlbU", level3, bday);
-  replay_start = 153;
-  replay_end = 176;
-  level_click("sjsP1wFNcC8", level3, bday,
-              replay_start * 1000,
-              (replay_end - replay_start) * 1000,
-              10, 236);
+  if (debugging) {
+    level_click("_Lbsz3WIlbU", level3, bday);
+  } else {
+    replay_start = 153;
+    replay_end = 176;
+    level_click("sjsP1wFNcC8", level3, bday,
+                replay_start,
+                replay_end - replay_start,
+                10, 236);
+  }
 };
 
 dl0.onclick = function () {
