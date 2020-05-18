@@ -238,7 +238,11 @@ start_level2.onclick = function () {
   if (debugging) {
     level_click("_Lbsz3WIlbU", level2, level3, 2000, 3000, 6, 12);
   } else {
-    level_click("_Lbsz3WIlbU", level2, level3, 26, 7, 6);
+    replay_start = 20;
+    replay_end = 46;
+    level_click("_Lbsz3WIlbU", level2, level3,
+                replay_start, replay_end - replay_start,
+                6);
   }
 };
 
