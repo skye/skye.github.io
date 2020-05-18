@@ -235,20 +235,36 @@ footer {
 }
 .instant-replay-container {
     position: relative;
-  width: 34vw;
+    width: 34vw;
 }
 
 .instant-replay-video {
     position: relative;
+    max-width: 34vw;
 }
 .instant-replay-tint {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  right: 0px;
-  z-index: 10;
-  background: rgba(255,0,0, 0.35);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 10;
+}
+
+.purple {
+  background: rgba(201,167,249,0.5);
+}
+
+.turq {
+  background: rgba(58,222,255,0.5);
+}
+
+.teal {
+  background: rgba(44,217,209,0.5);
+}
+
+.pink {
+  background: rgba(255,129,228,0.5);
 }
 
 #instant-replay-intro {
@@ -275,7 +291,7 @@ footer {
 
 /* light purple #C9A7F9 */
 /* darker purple #b282f7 */
-
+/* dark purple #9269CD */
 /* teal #2cd9d1 */
 /* turquoise #3adeff */
 /* light turquoise #a5f0ff */
@@ -308,5 +324,5 @@ footer {
 
 .instant-replay-color3 > h1 {
   background: #c9a7f9;
-  color: #b282f7;
+  color: #9269cd;
 }

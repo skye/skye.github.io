@@ -35,7 +35,7 @@ function waitForYT(cb) {
   if (yt_ready) {
     return cb();
   } else {
-    return setTimeout(waitForYt(), 100);
+    return setTimeout(waitForYt(), 300);
   }
 }
 
@@ -223,7 +223,7 @@ var debugging = false;
 
 start.onclick = function () {
   welcome.remove();
-  level1.classList.remove("hide");
+  level2.classList.remove("hide");
 };
 
 start_level1.onclick = function () {
